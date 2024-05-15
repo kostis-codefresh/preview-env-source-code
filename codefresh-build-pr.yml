@@ -1,0 +1,21 @@
+version: "1.0"
+stages:
+  - "clone"
+  - "build"
+steps:
+  clone:
+    title: "Cloning repository"
+    type: "git-clone"
+    repo: "kostis-codefresh/preview-env-source-code"
+    revision: "${{CF_REVISION}}"
+    git: "github-1"
+    stage: "clone"
+
+  build:
+    title: "Building Docker image"
+    type: "build"
+    image_name: "kostiscodefresh/my-preview-app"
+    working_directory: "${{clone}}"
+    tag: "${{CF_SHORT_REVISION}}"
+    dockerfile: "Dockerfile"
+    stage: "build"
